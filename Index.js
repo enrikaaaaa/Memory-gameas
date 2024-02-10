@@ -1,13 +1,13 @@
-const cards = document.querySelectorAll(".card"); //visos kortos
+const cards = document.querySelectorAll(".card"); 
 let cardOne, cardTwo;
-let disableDeck = false; //kad nebutu galima paspausti daugiau nei 2 kortu
-let matchedCard = 0; //kiek jau sutapo kortu
+let disableDeck = false; 
+let matchedCard = 0; 
 
 
 function flipCard(e) {
   let clickedCard = e.target;
   if (clickedCard !== cardOne) {
-    clickedCard.classList.add("flip"); // prie kiekvienos paspaustos korteles prisideda klase flip vietoje hoover
+    clickedCard.classList.add("flip"); 
     if (!cardOne) {
       return (cardOne = clickedCard);
     }
@@ -16,33 +16,31 @@ function flipCard(e) {
 
     let cardOneImg = cardOne.querySelector("img").src,
       cardTwoImg = cardTwo.querySelector("img").src;
-    matchCards(cardOneImg, cardTwoImg); //tikrina ar vienodi img pavadinimai
+    matchCards(cardOneImg, cardTwoImg); 
   }
 }
 
 function matchCards(img1, img2) {
-  //lygina ar sutampa
   if (img1 === img2) {
     matchedCard++;
     if (matchedCard == 8) {        
         setTimeout(() =>{
             shuffleCard();
         }, 1000);
-    } //jei sutampa (laimi) visos kortos tada susimaiso
+    } 
     
-
-    cardOne.removeEventListener("click", flipCard); //jei sutampa nuima event listenerius
-  cardTwo.removeEventListener("click", flipCard);
-    cardOne = cardTwo = ''; //nuresetina kintamuosius
-    return (disableDeck = false); //kad butu galima paspausti kitas korteles
+cardOne.removeEventListener("click", flipCard);
+cardTwo.removeEventListener("click", flipCard);
+    cardOne = cardTwo = ''; 
+    return (disableDeck = false); 
 }
   setTimeout(() => {
-    cardOne.classList.add("shake"); //sprideda papurtymo klase
+    cardOne.classList.add("shake"); 
     cardTwo.classList.add("shake");
   }, 400);
   
   setTimeout(() => {
-    cardOne.classList.remove("shake", "flip"); //prideda papurtymo klase kuri NEVEIKIA
+    cardOne.classList.remove("shake", "flip"); 
     cardTwo.classList.remove("shake", "flip");
     cardOne = cardTwo = ''; 
   }, 1200);
@@ -54,7 +52,7 @@ function shuffleCard() {
     disableDeck = false;
 
     let arr = [1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8];
-    arr.sort(() => Math.random() > 0.5 ? 1 : -1); //sumaiso kortas
+    arr.sort(() => Math.random() > 0.5 ? 1 : -1); 
 
     cards.forEach((card, i) => {
       card.classList.remove("flip");
@@ -66,12 +64,8 @@ function shuffleCard() {
     shuffleCard();
 
 cards.forEach((card) => {
-   //card.classList.add("flip");
-    
-  card.addEventListener("click", flipCard); //event listeneri visom kortelem
+card.addEventListener("click", flipCard); 
 });
-
-// skaiciuoja ejimus
 
 const counter = document.querySelector(".count");
 let count = 0;
@@ -82,7 +76,7 @@ function countClicks() {
 cards.forEach((card) => {
   card.addEventListener( "click", countClicks);
 });
-// skaiciuoja laika
+
 const timer = document.querySelector(".timer");
 let seconds = 0;
 let minutes = 0;
@@ -113,8 +107,7 @@ cards.forEach((card) => {
     card.addEventListener("click", timerStart);
     }
 );
-    
-// restartas
+
 const restart = document.querySelector(".restart");
 restart.addEventListener("click", () => {
   clearTimeout(t);
@@ -128,14 +121,12 @@ restart.addEventListener("click", () => {
   
 });
 
-// Pauzes mygtukas
 const pause = document.querySelector(".pause");
 pause.addEventListener("click", () => {
   clearTimeout(t);
   disableDeck = true;
 });
 
-// Zaidimo tesimui po pauzes
 const play = document.querySelector(".play");
 play.addEventListener("click", () => {
   timerStart();
